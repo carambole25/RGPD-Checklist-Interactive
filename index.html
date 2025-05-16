@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checklist RGPD - Audit</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #eef2f7;
+      margin: 0;
+      padding: 0 15px 40px;
+      color: #2c3e50;
+      line-height: 1.5;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: #134e8a;
+      padding: 20px 15px;
+      color: white;
+      border-radius: 0 0 10px 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    header svg {
+      width: 48px;
+      height: 48px;
+      fill: #ffcc00;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    .section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      padding: 25px 30px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #134e8a;
+      font-weight: 700;
+      font-size: 1.4rem;
+      border-bottom: 3px solid #ffcc00;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .question strong {
+      font-size: 1rem;
+      color: #33475b;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 70px;
+      border: 1.8px solid #ddd;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-size: 1rem;
+      font-family: 'Roboto', Arial, sans-serif;
+      resize: vertical;
+      transition: border-color 0.2s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #134e8a;
+      box-shadow: 0 0 6px #c5d7f2;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+      user-select: none;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #134e8a;
+      flex-shrink: 0;
+    }
+
+    label.checkbox-label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #4a5a6a;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: #134e8a;
+      color: white;
+      font-weight: 700;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      box-shadow: 0 6px 14px rgba(19, 78, 138, 0.6);
+      transition: background-color 0.3s ease;
+      margin-bottom: 30px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button:hover {
+      background-color: #0f3c6f;
+    }
+
+    p{
+        margin-left: 35%;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+    <img src="logo_rgpd.png" alt="Logo RGPD" style="height:48px; border-radius:8px; object-fit:contain;">
+    <h1>Checklist de conformité RGPD</h1>
+</header>
+
+<div id="form"></div>
+
+<script>
+  const sections = [
+    {
+      title: "1. Base légale et finalité",
+      questions: [
+        "Avez-vous identifié la base légale de chaque traitement ?",
+        "Avez-vous défini clairement la finalité de chaque traitement ?",
+        "La collecte est-elle limitée aux données nécessaires à la finalité poursuivie ?"
+      ]
+    },
+    {
+      title: "2. Transparence et information",
+      questions: [
+        "Les personnes concernées sont-elles informées clairement ?",
+        "Avez-vous mis à jour vos politiques de confidentialité ?",
+        "Les mentions RGPD obligatoires sont-elles présentes ?",
+        "Les supports d'information sont-ils à jour ?"
+      ]
+    },
+    {
+      title: "3. Droits des personnes",
+      questions: [
+        "Procédure pour répondre aux demandes d'exercice des droits ?",
+        "Le délai de réponse est-il respecté ?",
+        "Retrait du consentement accessible ?",
+        "Point de contact clair pour les demandes ?"
+      ]
+    },
+    {
+      title: "4. Registre des traitements",
+      questions: [
+        "Un registre est-il tenu à jour ?",
+        "Chaque traitement contient-il les éléments requis ?",
+        "Le registre est-il revu régulièrement ?"
+      ]
+    },
+    {
+      title: "5. Sécurité des données",
+      questions: [
+        "Mesures techniques et organisationnelles mises en place ?",
+        "Accès limités aux personnes autorisées ?",
+        "Sauvegardes régulières et sécurisées ?",
+        "Plan de gestion des incidents défini ?",
+        "Journal des violations maintenu ?",
+        "Protocole de notification CNIL et personnes ?"
+      ]
+    },
+    {
+      title: "6. Durée de conservation",
+      questions: [
+        "Durées de conservation déterminées et justifiées ?",
+        "Procédures d'archivage et de suppression ?",
+        "Tri régulier des données anciennes ?"
+      ]
+    },
+    {
+      title: "7. Relations avec les sous-traitants",
+      questions: [
+        "Sous-traitants identifiés ?",
+        "Contrats RGPD signés ?",
+        "Garanties suffisantes ?",
+        "Chaîne de sous-traitance maîtrisée ?"
+      ]
+    },
+    {
+      title: "8. Transferts de données hors UE",
+      questions: [
+        "Y a-t-il des transferts hors de l’UE ?",
+        "Garanties appropriées mises en place ?",
+        "Personnes concernées informées ?"
+      ]
+    },
+    {
+      title: "9. Analyse d'impact (PIA/DPIA)",
+      questions: [
+        "Traitements à risque identifiés ?",
+        "PIA réalisés ?",
+        "Mesures correctives mises en œuvre ?"
+      ]
+    },
+    {
+      title: "10. Gouvernance et sensibilisation",
+      questions: [
+        "Un DPO désigné si nécessaire ?",
+        "Fonction documentée ?",
+        "Personnel formé et sensibilisé ?",
+        "Politique interne diffusée ?",
+        "Audits RGPD prévus ?"
+      ]
+    }
+  ];
+
+  const container = document.getElementById("form");
+sections.forEach(section => {
+  const div = document.createElement("div");
+  div.className = "section";
+  const h2 = document.createElement("h2");
+  h2.textContent = section.title;
+  div.appendChild(h2);
+  section.questions.forEach(q => {
+    const questionDiv = document.createElement("div");
+    questionDiv.className = "question";
+
+    const label = document.createElement("label");
+    label.innerHTML = `<strong>${q}</strong>`;
+
+    const textarea = document.createElement("textarea");
+    textarea.placeholder = "Votre réponse ici...";
+
+    questionDiv.appendChild(label);
+    questionDiv.appendChild(textarea);
+
+    div.appendChild(questionDiv);
+  });
+  container.appendChild(div);
+});
+
+  function generatePDF() {
+    window.print();
+  }
+</script>
+<script>
+alert("Vous pouvez télécharger le document au format PDF via Ctrl+P.\n\nPour éviter que l’URL ne soit affichée dans le document :\nDans Plus de paramètres > décochez Imprimer les en-têtes et pieds de page.")
+</script>
+
+</body>
+</html>
